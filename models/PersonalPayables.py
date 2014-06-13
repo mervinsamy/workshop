@@ -2,8 +2,8 @@ import db
 
     
 class PersonalPayables(object):
-  def __init__(self, FieldEmpID, Type, Amount, PeriodCode, DateCreated):
-        
+  def __init__(self, ID, FieldEmpID, Type, Amount, PeriodCode, DateCreated):
+        self.ID = ID
         self.FieldEmpID=FieldEmpID
         self.Type=Type
         self.Amount=Amount

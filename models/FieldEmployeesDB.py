@@ -19,3 +19,7 @@ def getFieldEmployee(val):
     if row is not None:
       FieldEmployee = FieldEmployees.FieldEmployees( str(row[0]), str(row[1]), str(row[2]), str(row[3]), str(row[4]), str(row[5]), str(row[6]), str(row[7]), str(row[8]), str(row[9]), str(row[10]), str(row[11]), str(row[12]), str(row[13]), int(row[14]), str(row[15]), str(row[16]), str(row[17]), str(row[18]), str(row[19]), str(row[20]) )
   return FieldEmployee
+
+def getName(val):
+  res = db.get("Select * from FieldEmployees where ID=%s" % val)
+  return res

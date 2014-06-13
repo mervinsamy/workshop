@@ -147,6 +147,10 @@
   
   <div id="tabs-3">
     <form class='pure-form pure-form-aligned'>
+        <form method='link' action=''>
+            <button style='float:right;' class="pure-button"/>Add New Allowance</button>
+        </form>
+        <br/><br/><br/>
         <table class='pure-table'>
                 <thead>
                     <tr>
@@ -159,14 +163,16 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for A in Allowances %}
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ A.FieldEmpID }}</td>
+                        <td>{{ A.Amount }}</td>
+                        <td>{{ A.LastUpdateDate }}</td>
+                        <td>{{ A.Status }}</td>
                         <td><form method='link' action=''><button class='pure-button'>Edit</button></form></td>
                         <td><form method='link' action=''><button class='pure-button'>Delete</button></form></td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
     </form>

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+
+
+{% block sidebar %}
+<div class="sidebar gradient">
+    <hr class='navline navline1'/>
+    <h2 class='navtitle'>PAYABLES SYSTEM</h2>
+    <hr class='navline'/>
+    
+    <div class='sidebar-menu'>
+        <h4>Payable Records</h4>
+        <ul class="right">
+            <li class="nobullets"><a href='{{ url_for('listDetachmentsPayables') }}' class='opt2'>View Record</a></li>
+            <li class="nobullets"><a href='{{ url_for('listDetachmentsPayables') }}' class='opt2'>Add Record</a></li>
+        </ul> 
+    </div>
+
+</div>
+{% endblock sidebar %}
+
+{% block content %}
+
+    <h1>Payable Record</h1>
+    <hr>
+    <br/>
+    <label>Period Code: </label><b>{{ Period }}</b>
+    <br/>
+    <form>
+        <button style='float:right;' class='pure-button'>Add New Payable</button>
+    </form>
+    <br/><br/>
+    <table class='pure-table'>
+        <thead>
+        <tr>
+            <th>Employee Name</th>
+            <th class='col'>Receivable Type</th>
+            <th class='col'>Amount</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id='tablebody'>
+        {% for P in Payables %}
+        <tr>
+            <td>{{ P.FieldEmpID }}</td>
+            <td>{{ P.Type }}</td>
+            <td>{{ P.Amount }}</td>
+            <td>
+                <form>
+                    <button class='pure-button'>Edit</button>
+                </form>
+            </td>
+            <td>
+                <form>
+                    <button class='pure-button'>Delete</button>
+                </form>
+            </td>
+        <tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <br/>
+
+    <br/>
+    
+
+{% endblock content%}

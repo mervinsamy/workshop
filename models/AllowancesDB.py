@@ -17,3 +17,14 @@ def getAllowance(val):
     if row is not None:
       Allowance = Allowances.Allowances( int(row[0]), int(row[1]), int(row[2]), int(row[3]), str(row[4]), str(row[5]) )
   return Allowance
+
+def getAllowances(val):
+  res = db.SubList("Allowances", "DetachID", val)
+  AllowanceList = []
+  for row in res:
+    if row is not None:
+      Allowance = Allowances.Allowances( int(row[0]), int(row[1]), int(row[2]), int(row[3]), str(row[4]), str(row[5]) )
+      AllowanceList.append(Allowance)
+      row = db.cur.fetchone()
+  return AllowanceList
+  

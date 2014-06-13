@@ -19,13 +19,13 @@
 
 {% block content %}
 
-<h1>Accenture Payables</h1>
+<h1>Employee Personal Payables</h1>
 <hr>
 <!--{% for company in companies %}
 {% endfor %}-->
 <br/>
 <div id="periods">
-  <form class='pure-form pure-form-aligned' method='link' action='{{ url_for('viewPayables') }}'>
+  <form class='pure-form pure-form-aligned' method='link' action='{{ url_for('addPayables') }}'>
     <button class='pure-button'>Add New Payable Record</button>
   </form>
   <br/><br/><br/>
@@ -37,51 +37,20 @@
     <thead>
       <tr>
         <th class="sort" data-sort="period">Period</th>
-        <th class="sort" data-sort="start">Start Date</th>
-	<th class="sort" data-sort="end">End Date</th>
       </tr>
     </thead>
 
     <tbody class="list">
       <tr>
-        <td class="period"><a href='{{ url_for('viewPayables') }}'>0114</a></td>
-        <td class="start">Jan. 1, 2014</td>
-	<td class="end">Jan. 15, 2014</td>
-      </tr>
-      <tr>
-        <td class="period">0214</td>
-        <td class="start">Jan. 16, 2014</td>
-	<td class="end">Jan. 31, 2014</td>
-      </tr>
-      <tr>
-        <td class="period">0314</td>
-        <td class="start">Feb. 1, 2014</td>
-	<td class="end">Feb. 15, 2014</td>
-      </tr>
-      <tr>
-        <td class="period">0414</td>
-        <td class="start">Feb. 16, 2014</td>
-	<td class="end">Feb. 28, 2014</td>
-      </tr>
+        {% for P in Payables %}
+	    <tr>
+	        <td class="period"><a href='{{ url_for('viewPayables', period=P.PeriodCode) }}'>{{ P.PeriodCode }}</a></td>
+	    </tr>
+	   {% endfor %}
     </tbody>
   </table>
 </div>
 
 
-<script>
-var options = {
-  valueNames: [ 'period', 'start', 'end' ]
-};
-
-// Init list
-var periodList = new List('periods', options);
-
-var periodField = $('#period-field'),
-    startField = $('#start-field'),
-    endField = $('#end-field');
-
-refreshCallbacks();
-
-</script>
     
 {% endblock content %}

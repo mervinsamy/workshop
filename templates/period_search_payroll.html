@@ -20,7 +20,7 @@
 
 {% block content %}
 
-<h1>McDonalds Valenzuela Payroll</h1>
+<h1>{{ DE.Name }}</h1>
 <hr>
 <!--{% for company in companies %}
 {% endfor %}-->
@@ -45,24 +45,9 @@
 
     <tbody class="list">
       <tr>
-        <td class="period"><a href='{{ url_for('viewPayrollRoster') }}'>0114</a></td>
+        <td class="period"><a href=''>0114</a></td>
         <td class="start">Jan. 1, 2014</td>
 	<td class="end">Jan. 15, 2014</td>
-      </tr>
-      <tr>
-        <td class="period">0214</td>
-        <td class="start">Jan. 16, 2014</td>
-	<td class="end">Jan. 31, 2014</td>
-      </tr>
-      <tr>
-        <td class="period">0314</td>
-        <td class="start">Feb. 1, 2014</td>
-	<td class="end">Feb. 15, 2014</td>
-      </tr>
-      <tr>
-        <td class="period">0414</td>
-        <td class="start">Feb. 16, 2014</td>
-	<td class="end">Feb. 28, 2014</td>
       </tr>
     </tbody>
   </table>

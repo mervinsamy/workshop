@@ -78,7 +78,7 @@ def login():
     
     #----TO BE ADDED -----
     elif session['usertype'] == 'PyO':
-        return redirect(url_for('listDetachmentsPayables'))
+        return redirect(url_for('viewPeriodsPayables'))
     elif session['usertype'] == 'BeO':
         return redirect(url_for('viewPeriodsBenefits'))
     elif session['usertype'] == 'RO':
@@ -278,7 +278,8 @@ def viewDetachment(ID, user=None):
       ContactPersons = DetachmentContactPersonsDB.getDetachmentContactPersons(ID)
       Rates = RatesDB.getPayrollRate(ID)
       Rates = sorted(Rates, key=lambda Rate: Rate.EffectiveDate, reverse=True)
-      return render_template('detachment_view.html', DE=DE, Client=Client, ContactPersons=ContactPersons, Rate=Rates, user=escape(session['user']))
+      Allowances = AllowancesDB.getAllowances(ID)
+      return render_template('detachment_view.html', DE=DE, Client=Client, ContactPersons=ContactPersons, Rate=Rates, Allowances = Allowances, user=escape(session['user']))
     else:
       flash('Unauthorized access')
       return redirect(url_for('logout'))
@@ -443,11 +444,15 @@ def listDetachmentsManhour(user=None):
 def listDetachmentsPayroll(user=None):
   if 'usertype' in session:
     if session['usertype'] == 'PrO' or session['usertype'] == 'ADM':
-      return render_template('detachment_search_payroll.html', user=escape(session['user']))
+      DEs = DetachmentsDB.getAllDetachments()
+      return render_template('detachment_search_payroll.html', DEs=DEs, user=escape(session['user']))
     else:
       flash('Unauthorized access')
       return redirect(url_for('logout'))
  
+
+
+
 @app.route('/detachments/<usertype>', methods=['POST', 'GET'])
 def listDetachmentsAdmin(usertype, user=None):
   if 'usertype' in session:
@@ -484,12 +489,15 @@ def viewPeriodsManhour(ID, user=None):
     else:
       flash('Unauthorized access')
       return redirect(url_for('logout'))
+    
 
+    
 @app.route('/payroll/detachments/get/<ID>/records', methods=['POST', 'GET'])
-def viewPeriodsPayroll(user=None):
+def viewPeriodsPayroll(ID, user=None):
   if 'usertype' in session:
     if session['usertype'] == 'PrO' or session['usertype'] == 'ADM':
-      return render_template('period_search_payroll.html', view='payroll', user=escape(session['user']))
+      DE = DetachmentsDB.getDetachment(ID)
+      return render_template('period_search_payroll.html', DE=DE, view='payroll', user=escape(session['user']))
     else:
       flash('Unauthorized access')
       return redirect(url_for('logout'))
@@ -514,20 +522,32 @@ def listDetachmentsPayables(user=None):
       flash('Unauthorized access')
       return redirect(url_for('logout'))
 
-@app.route('/payables/detachments/get/ID/records', methods=['POST', 'GET'])
+@app.route('/payables/detachments/get/records', methods=['POST', 'GET'])
 def viewPeriodsPayables(user=None):
   if 'usertype' in session:
     if session['usertype'] == 'PyO' or session['usertype'] == 'ADM':
-      return render_template('period_search_payables.html', user=escape(session['user']))
+      Payables = PersonalPayablesDB.listPayables()
+      return render_template('period_search_payables.html', Payables=Payables, user=escape(session['user']))
     else:
       flash('Unauthorized access')
       return redirect(url_for('logout'))
-
-@app.route('/payables/detachments/get/id/period', methods=['POST', 'GET'])
-def viewPayables(user=None):
+    
+@app.route('/payables/<period>', methods=['POST', 'GET'])
+def viewPayables(period, user=None):
   if 'usertype' in session:
     if session['usertype'] == 'PyO' or session['usertype'] == 'ADM':
-      return render_template('payables.html', user=escape(session['user']))
+      Payables = PersonalPayablesDB.getPayables(period)
+      Period = Payables[0].PeriodCode
+      return render_template('payables_view.html', Payables=Payables, Period=Period, user=escape(session['user']))
+    else:
+      flash('Unauthorized access')
+      return redirect(url_for('logout'))
+    
+@app.route('/payables/add', methods=['POST', 'GET'])
+def addPayables(user=None):
+  if 'usertype' in session:
+    if session['usertype'] == 'PyO' or session['usertype'] == 'ADM':
+      return render_template('payables_add.html', user=escape(session['user']))
     else:
       flash('Unauthorized access')
       return redirect(url_for('logout'))

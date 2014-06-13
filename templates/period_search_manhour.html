@@ -48,8 +48,8 @@
 	   {% for M in MH %}
 	    <tr>
 	        <td class="period"><a href='{{ url_for('manhour', ID=DE.ID, Code=M.PeriodCode) }}'>{{ M.PeriodCode }}</a></td>
-	        <td class="start">Start Date</td>
-		<td class="end">End Date</td>
+	        <td class="start">{{ M.StartDate}}</td>
+		<td class="end">{{ M.EndDate }}</td>
 	    </tr>
 	   {% endfor %}
 	</tbody>

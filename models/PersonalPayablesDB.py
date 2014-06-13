@@ -6,7 +6,7 @@ def getPersonalPayables():
   PersonalPayablesList = []
   for row in res:
     if row is not None:
-      PersonalPayable = PersonalPayables.PersonalPayables( int(row[0]), int(row[1]), int(row[2]), int(row[3]), int(row[4]), int(row[5]), int(row[6]), int(row[7]), int(row[8]), int(row[9]), int(row[10]), int(row[11]), int(row[12]), int(row[13]), int(row[14]), int(row[15]) )
+      PersonalPayable = PersonalPayables.PersonalPayables( int(row[0]), int(row[1]), str(row[2]), str(row[3]), str(row[4]), str(row[5]) )
       PersonalPayablesList.append(PersonalPayable)
       row = cur.fetchone()
   return PersonalPayables
@@ -15,5 +15,25 @@ def getPayrollRecord(val):
   res = db.SubList("PersonalPayables", "ID", val)
   for row in res:
     if row is not None:
-      PersonalPayable = PersonalPayables.PersonalPayables( int(row[0]), int(row[1]), int(row[2]), int(row[3]), int(row[4]), int(row[5]), int(row[6]), int(row[7]), int(row[8]), int(row[9]), int(row[10]), int(row[11]), int(row[12]), int(row[13]), int(row[14]), int(row[15]) )
+      PersonalPayable = PersonalPayables.PersonalPayables( int(row[0]), int(row[1]), str(row[2]), str(row[3]), str(row[4]), str(row[5]) )
   return PersonalPayables
+
+def listPayables():
+  res = db.ListByPeriod("PersonalPayables")
+  PayableList = []
+  for row in res:
+    if row is not None:
+      Payable = PersonalPayables.PersonalPayables( int(row[0]), int(row[1]), str(row[2]), str(row[3]), str(row[4]), str(row[5]) )
+      PayableList.append(Payable)
+      row = db.cur.fetchone()
+  return PayableList
+
+def getPayables(val):
+  res = db.SubList("PersonalPayables", "PeriodCode", val)
+  PayableList = []
+  for row in res:
+    if row is not None:
+      Payable = PersonalPayables.PersonalPayables( int(row[0]), int(row[1]), str(row[2]), str(row[3]), str(row[4]), str(row[5]) )
+      PayableList.append(Payable)
+      row = db.cur.fetchone()
+  return PayableList

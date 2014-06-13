@@ -1,11 +1,11 @@
-import db
+import db, import_file
 
 class Allowances(object):
 
-  def __init__(self, ID, DetachID, GuardID, Amount, LastUpdateDate, Status):
+  def __init__(self, ID, DetachID, FieldEmpID, Amount, LastUpdateDate, Status):
     self.ID = ID
     self.DetachID = DetachID
-    self.GuardID = GuardID
+    self.FieldEmpID = FieldEmpID
     self.Amount = Amount
     self.LastUpdateDate = LastUpdateDate
     self.Status = Status
@@ -14,7 +14,7 @@ class Allowances(object):
     #sql = "insert into DetachmentContactPersons (ID, DetachID, GuardID, Amount, LastUpdateDate, Status) values (%s, %s, %s, %s, %s, %s)"
     #params = (self.ID, self.DetachID, self.GuardID, self.Amount, self.LastUpdateDate, self.Status)
     #return db.ins(sql, params)
-
+    
   def save(self):
     sql = "insert into Allowances (ID, DetachID, GuardID, Amount, LastUpdateDate, Status) values (%s, %s, %s, %s, %s, %s)"
     params = (self.ID, self.DetachID, self.GuardID, self.Amount, self.LastUpdateDate, self.Status)
